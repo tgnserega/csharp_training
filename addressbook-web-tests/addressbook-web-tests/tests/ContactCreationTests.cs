@@ -12,18 +12,27 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToAddContactsPage();
             ContactData contact = (new ContactData("Ivanov", "Ivan"));
             contact.Title = "Test";
             contact.Company = "Arl";
             contact.Address = "Russia";
             contact.Mobilephone = "888888";
             contact.Email = "adkl@sdkgfj.com";
-            FillContactForm(contact);
-            SubmitContactCreation();
-            Logout();
+
+            app.Contacts.Create(contact);
+        }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contact = (new ContactData("", ""));
+            contact.Title = "";
+            contact.Company = "";
+            contact.Address = "";
+            contact.Mobilephone = "";
+            contact.Email = "";
+
+            app.Contacts.Create(contact);
         }
     }
 }
