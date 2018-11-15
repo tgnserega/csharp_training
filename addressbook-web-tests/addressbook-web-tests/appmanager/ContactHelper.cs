@@ -22,10 +22,20 @@ namespace WebAddressbookTests
             SubmitContactCreation();
             return this;
         }
+
+        public ContactHelper Modify(int v, ContactData newData)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactModification();
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
         public ContactHelper Remove(int v)
         {
             manager.Navigator.GoToContactsPage();
-            SelectContact(2);
+            SelectContact(v);
             RemoveContact();
             CloseAlert();
             manager.Navigator.ReturnToContactsPage();
@@ -76,6 +86,18 @@ namespace WebAddressbookTests
         public void SubmitContactCreation()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification()
+        {
+            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
+            return this;
         }
     }
 }
