@@ -20,7 +20,7 @@ namespace WebAddressbookTests
             newData.Mobilephone = "8888882";
             newData.Email = "adkl@sdkgfj.com2";
 
-            app.Contacts.Modify(1, newData);
+            app.Contacts.Modify(2, newData);
         }
     }
 }

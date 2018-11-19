@@ -29,7 +29,7 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(1);
+            SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
