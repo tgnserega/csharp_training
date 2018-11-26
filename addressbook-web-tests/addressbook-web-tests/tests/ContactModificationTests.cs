@@ -8,17 +8,18 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newData = (new ContactData("Ivanov2", "Ivan2"));
-            newData.Title = "Test2";
-            newData.Company = "Arl2";
-            newData.Address = "Russia2";
-            newData.Mobilephone = "8888882";
-            newData.Email = "adkl@sdkgfj.com2";
+            var a = new Random().Next(1, 13000);
+            ContactData newData = (new ContactData("Ivanov" + a, "Ivan" + a));
+            newData.Title = null;
+            newData.Company = null;
+            newData.Address = null;
+            newData.Mobilephone = null;
+            newData.Email = null;
 
             app.Contacts.Modify(2, newData);
         }
