@@ -20,6 +20,7 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupsPage();
+            GreateGroupIfNotExist();
             SelectGroup(v);
             RemoveGroup();
             manager.Navigator.ReturnToGroupsPage();
@@ -29,6 +30,7 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+            GreateGroupIfNotExist();
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -40,6 +42,7 @@ namespace WebAddressbookTests
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupsPage();
+
             InitNewGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -75,9 +78,22 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.Name("selected[]")).Click();
             return this;
         }
+
+        public void GreateGroupIfNotExist()
+        {
+            if (!IsElementExist(By.Name("selected[]")))
+            {
+                GroupData group = new GroupData("Test1");
+                group.Header = "Test2";
+                group.Footer = "Test3";
+
+                Create(group);
+            }
+        }
+
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();

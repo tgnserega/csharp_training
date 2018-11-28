@@ -23,19 +23,23 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData newData)
+        public ContactHelper Modify(ContactData newData)
         {
             manager.Navigator.GoToContactsPage();
-            InitContactModification(v);
+            GreateContactIfNotExist();
+            manager.Navigator.GoToContactsPage();
+            InitContactModification();
             FillContactForm(newData);
             SubmitContactModification();
             return this;
         }
 
-        public ContactHelper Remove(int v)
+        public ContactHelper Remove()
         {
             manager.Navigator.GoToContactsPage();
-            SelectContact(v);
+            GreateContactIfNotExist();
+            manager.Navigator.GoToContactsPage();
+            SelectContact();
             RemoveContact();
             CloseAlert();
             manager.Navigator.ReturnToContactsPage();
@@ -55,9 +59,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContact(int index)
+        public ContactHelper SelectContact()
         {
-            driver.FindElement(By.XPath("(//*[@id='maintable']/tbody/tr/td[1])[" + index + "]")).Click();
+            driver.FindElement(By.Name("selected[]")).Click();
             return this;
         }
 
@@ -85,10 +89,27 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper InitContactModification(int index)
+        public ContactHelper InitContactModification()
         {
-            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr[" + index + "]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
             return this;
+        }
+
+        public void GreateContactIfNotExist()
+        {
+            if (!IsElementExist(By.Name("selected[]")))
+            {
+                ContactData contact = new ContactData("Ivanov", "Ivan")
+                {
+                    Title = "Test",
+                    Company = "Arl",
+                    Address = "Russia",
+                    Mobilephone = "888888",
+                    Email = "adkl@sdkgfj.com"
+                };
+
+                Create(contact);
+            }
         }
     }
 }

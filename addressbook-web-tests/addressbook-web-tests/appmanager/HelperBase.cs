@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System;
 
 namespace WebAddressbookTests
 {
@@ -25,7 +26,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public bool IsElementPresent(By by)
+        public bool IsElementExist(By by)
         {
             try
             {
@@ -36,6 +37,12 @@ namespace WebAddressbookTests
             {
                 return false;
             }
+        }
+
+        protected IWebElement WaitClicable(By element)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(4));
+            return wait.Until(ExpectedConditions.ElementToBeClickable(element));
         }
     }
 }

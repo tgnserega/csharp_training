@@ -21,7 +21,7 @@ namespace WebAddressbookTests
             newData.Mobilephone = null;
             newData.Email = null;
 
-            app.Contacts.Modify(2, newData);
+            app.Contacts.Modify(newData);
         }
     }
 }
