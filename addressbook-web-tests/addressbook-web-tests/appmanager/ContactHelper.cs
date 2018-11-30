@@ -26,18 +26,33 @@ namespace WebAddressbookTests
         public ContactHelper Modify(ContactData newData)
         {
             manager.Navigator.GoToContactsPage();
-            GreateContactIfNotExist();
-            manager.Navigator.GoToContactsPage();
             InitContactModification();
             FillContactForm(newData);
             SubmitContactModification();
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.GoToContactsPage();
+
+
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    var info = element.FindElements(By.CssSelector("td"));
+                    var a = new ContactData(info[1].Text, info[2].Text);
+                    //a.Address = info[3].Text;
+                    contacts.Add(a);
+                }
+
+            return contacts;
+        }
+
         public ContactHelper Remove()
         {
-            manager.Navigator.GoToContactsPage();
-            GreateContactIfNotExist();
             manager.Navigator.GoToContactsPage();
             SelectContact();
             RemoveContact();
@@ -97,6 +112,7 @@ namespace WebAddressbookTests
 
         public void GreateContactIfNotExist()
         {
+            manager.Navigator.GoToContactsPage();
             if (!IsElementExist(By.Name("selected[]")))
             {
                 ContactData contact = new ContactData("Ivanov", "Ivan")

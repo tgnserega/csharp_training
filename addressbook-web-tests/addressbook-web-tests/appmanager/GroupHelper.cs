@@ -17,21 +17,34 @@ namespace WebAddressbookTests
         {
         }
 
-        public GroupHelper Remove(int v)
+        public GroupHelper Remove()
         {
             manager.Navigator.GoToGroupsPage();
-            GreateGroupIfNotExist();
-            SelectGroup(v);
+            SelectGroup();
             RemoveGroup();
             manager.Navigator.ReturnToGroupsPage();
             return this;
         }
 
-        public GroupHelper Modify(int v, GroupData newData)
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+
+            manager.Navigator.GoToGroupsPage();
+
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groups.Add(new GroupData(element.Text));
+                }
+
+            return groups;
+        }
+
+        public GroupHelper Modify(GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            GreateGroupIfNotExist();
-            SelectGroup(v);
+            SelectGroup();
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -76,20 +89,21 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper SelectGroup(int index)
+        public GroupHelper SelectGroup()
         {
             driver.FindElement(By.Name("selected[]")).Click();
             return this;
         }
 
-        public void GreateGroupIfNotExist()
+        public void CreateGroupIfNotExist()
         {
+
+            manager.Navigator.GoToGroupsPage();
             if (!IsElementExist(By.Name("selected[]")))
             {
                 GroupData group = new GroupData("Test1");
                 group.Header = "Test2";
                 group.Footer = "Test3";
-
                 Create(group);
             }
         }
