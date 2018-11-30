@@ -8,18 +8,10 @@ namespace WebAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string lastname;
-        private string title = "";
-        private string company = "";
-        private string address = "";
-        private string mobilephone = "";
-        private string email = "";
-
         public ContactData(string lastname, string firstname)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -60,84 +52,18 @@ namespace WebAddressbookTests
             return Firstname.CompareTo(other.Firstname);
         }
 
+        public string Firstname { get; set; }
 
-        public string Firstname
-        {
-            get
-            {
-                return firstname;
-            }
-            set
-            {
-                firstname = value;
-            }
-        }
+        public string Lastname { get; set; }
 
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-            set
-            {
-                lastname = value;
-            }
-        }
-        public string Company
-        {
-            get
-            {
-                return company;
-            }
-            set
-            {
-                company = value;
-            }
-        }
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-            {
-                title = value;
-            }
-        }
-        public string Address
-        {
-            get
-            {
-                return address;
-            }
-            set
-            {
-                address = value;
-            }
-        }
-        public string Mobilephone
-        {
-            get
-            {
-                return mobilephone;
-            }
-            set
-            {
-                mobilephone = value;
-            }
-        }
-        public string Email
-        {
-            get
-            {
-                return email;
-            }
-            set
-            {
-                email = value;
-            }
-        }
+        public string Company { get; set; }
+
+        public string Title { get; set; }
+
+        public string Address { get; set; }
+
+        public string Mobilephone { get; set; }
+
+        public string Email { get; set; }
     }
 }
