@@ -19,7 +19,11 @@ namespace WebAddressbookTests
             newData.Company = null;
             newData.Address = null;
             newData.Mobilephone = null;
+            newData.Homephone = null;
+            newData.Workphone = null;
             newData.Email = null;
+            newData.Email2 = null;
+            newData.Email3 = null;
 
             app.Contacts.GreateContactIfNotExist();
 

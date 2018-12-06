@@ -7,6 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -15,6 +16,55 @@ namespace WebAddressbookTests
         public ContactHelper(ApplicationManager manager) : base(manager)
         {
         }
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.GoToContactsPage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allEmails = cells[4].Text;
+            string allPhones = cells[5].Text;
+
+            return new ContactData(lastName, firstName)
+            {
+
+                Address = address,
+                AllEmails = allEmails,
+                AllPhones = allPhones
+
+            };
+        }
+
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactModification();
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData(lastName, firstName)
+            {
+
+                Address = address,
+                Mobilephone = mobilePhone,
+                Homephone = homePhone,
+                Workphone = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
+
+            };
+        }
+
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToAddContactsPage();
@@ -97,7 +147,11 @@ namespace WebAddressbookTests
             Type(By.Name("company"), contact.Company);
             Type(By.Name("address"), contact.Address);
             Type(By.Name("mobile"), contact.Mobilephone);
+            Type(By.Name("home"), contact.Homephone);
+            Type(By.Name("work"), contact.Workphone);
             Type(By.Name("email"), contact.Email);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
             return this;
         }
 
@@ -138,5 +192,13 @@ namespace WebAddressbookTests
                 Create(contact);
             }
         }
+
+        //public int GetNumberOfSearchPage()
+        //{
+        //    manager.Navigator.GoToContactsPage();
+        //    string text = driver.FindElement(By.TagName("label")).Text;
+        //    Match m = new Regex(@"\d+").Match(text);
+        //    return Int32.Parse(m.Value);
+        //}
     }
 }

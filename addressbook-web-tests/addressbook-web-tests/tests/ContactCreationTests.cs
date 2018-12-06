@@ -18,8 +18,12 @@ namespace WebAddressbookTests
                 Title = "Test",
                 Company = "Arl",
                 Address = "Russia",
-                Mobilephone = "888888",
-                Email = "adkl@sdkgfj.com"
+                Mobilephone = "8-(999)-12312-12",
+                Homephone = "8-(456)-567-345",
+                Workphone = "8-(862)-4657-6",
+                Email = "adkl@sdkgfj.com",
+                Email2 = "12@08=0=0--.ru",
+                Email3 = "o0o0@bk.com"
             };
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
@@ -38,13 +42,20 @@ namespace WebAddressbookTests
 
         [Test]
         public void EmptyContactCreationTest()
+
         {
-            ContactData contact = (new ContactData("", ""));
-            contact.Title = "";
-            contact.Company = "";
-            contact.Address = "";
-            contact.Mobilephone = "";
-            contact.Email = "";
+            ContactData contact = new ContactData("", "")
+            {
+                Title = "",
+                Company = "",
+                Address = "",
+                Mobilephone = "",
+                Homephone = "",
+                Workphone = "",
+                Email = "",
+                Email2 = "",
+                Email3 = ""
+            };
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
