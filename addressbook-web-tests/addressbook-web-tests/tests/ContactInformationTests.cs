@@ -14,6 +14,8 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactInformation()
         {
+            app.Contacts.GreateContactIfNotExist();
+
             ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
 
@@ -21,7 +23,21 @@ namespace WebAddressbookTests
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
-          //  Assert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
+            Assert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
+
+        }
+
+        [Test]
+        public void TestContactDetailsPage()
+
+        {
+
+            app.Contacts.GreateContactIfNotExist();
+
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
+            ContactData fromPropetiesPage = app.Contacts.GetContactInformationFromPropertiesPage(0);
+
+            Assert.AreEqual(fromForm.AllInformationFromEditForm, fromPropetiesPage.ContactPropertiesPageText);
 
         }
     }

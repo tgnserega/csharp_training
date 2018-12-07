@@ -117,7 +117,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Email + Email2 + Email3;
+                    return Email + "\r\n" + Email2 + "\r\n" + Email3;
                 }
             }
             set
@@ -125,5 +125,29 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
+
+        public string AllInformationFromEditForm
+        {
+            get
+            {
+                if (AllInformationFromEditForm != null)
+                {
+                    return AllInformationFromEditForm;
+                }
+                else
+                {
+                    return Firstname + Lastname + Homephone + Mobilephone + Workphone
+
+    + Email + Email2 + Email3;
+
+                }
+            }
+            set
+            {
+                AllInformationFromEditForm = value;
+            }
+        }
+
+        public string ContactPropertiesPageText { get; set; }
     }
 }

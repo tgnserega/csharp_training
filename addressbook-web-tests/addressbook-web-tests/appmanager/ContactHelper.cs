@@ -37,6 +37,32 @@ namespace WebAddressbookTests
             };
         }
 
+        public ContactData GetContactInformationFromPropertiesPage(int v)
+        {
+
+            manager.Navigator.GoToContactsPage();
+            OpenContactPropertiesPage(0);
+
+            string contactPropertiesPageText = driver.FindElement(By.CssSelector("#content")).Text;
+
+            contactPropertiesPageText = Regex.Replace(contactPropertiesPageText, "[ HMW:\r\n]", "").Trim();
+
+            return new ContactData("", "")
+
+            {
+
+                ContactPropertiesPageText = contactPropertiesPageText
+
+            };
+        }
+
+        public ContactHelper OpenContactPropertiesPage(int i)
+        {
+
+            driver.FindElements(By.Name("entry"))[i].FindElements(By.TagName("td"))[6].FindElement(By.TagName("a")).Click();
+            return this;
+        }
+
         public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.GoToContactsPage();
@@ -50,6 +76,10 @@ namespace WebAddressbookTests
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            string AllInformationFromEditForm = firstName + lastName + homePhone + mobilePhone + workPhone
+
+    + email + email2 + email3;
 
             return new ContactData(lastName, firstName)
             {
@@ -182,11 +212,12 @@ namespace WebAddressbookTests
             {
                 ContactData contact = new ContactData("Ivanov", "Ivan")
                 {
-                    Title = "Test",
-                    Company = "Arl",
-                    Address = "Russia",
-                    Mobilephone = "888888",
-                    Email = "adkl@sdkgfj.com"
+                    Mobilephone = "8-(77)-1272-12",
+                    Homephone = "8-(45)-5267-345",
+                    Workphone = "8-(42)-542-6",
+                    Email = "dgfyhj@dy.yj",
+                    Email2 = "etyj@yteyj.tj",
+                    Email3 = "eytj@dghfj.dhgf"
                 };
 
                 Create(contact);

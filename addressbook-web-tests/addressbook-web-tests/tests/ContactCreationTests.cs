@@ -15,9 +15,6 @@ namespace WebAddressbookTests
         {
             ContactData contact = new ContactData("Ivan", "Ivanov")
             {
-                Title = "Test",
-                Company = "Arl",
-                Address = "Russia",
                 Mobilephone = "8-(999)-12312-12",
                 Homephone = "8-(456)-567-345",
                 Workphone = "8-(862)-4657-6",
