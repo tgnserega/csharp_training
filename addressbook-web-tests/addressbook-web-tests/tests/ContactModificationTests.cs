@@ -15,9 +15,6 @@ namespace WebAddressbookTests
         {
             var a = new Random().Next(1, 13000);
             ContactData newData = (new ContactData("Ivanov" + a, "Ivan" + a));
-            newData.Title = null;
-            newData.Company = null;
-            newData.Address = null;
             newData.Mobilephone = null;
             newData.Homephone = null;
             newData.Workphone = null;

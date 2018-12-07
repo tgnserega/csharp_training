@@ -23,14 +23,12 @@ namespace WebAddressbookTests
             IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"));
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
-            string address = cells[3].Text;
             string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
             return new ContactData(lastName, firstName)
             {
 
-                Address = address,
                 AllEmails = allEmails,
                 AllPhones = allPhones
 
@@ -84,7 +82,6 @@ namespace WebAddressbookTests
             return new ContactData(lastName, firstName)
             {
 
-                Address = address,
                 Mobilephone = mobilePhone,
                 Homephone = homePhone,
                 Workphone = workPhone,
@@ -173,9 +170,6 @@ namespace WebAddressbookTests
         {
             Type(By.Name("firstname"), contact.Firstname);
             Type(By.Name("lastname"), contact.Lastname);
-            Type(By.Name("title"), contact.Title);
-            Type(By.Name("company"), contact.Company);
-            Type(By.Name("address"), contact.Address);
             Type(By.Name("mobile"), contact.Mobilephone);
             Type(By.Name("home"), contact.Homephone);
             Type(By.Name("work"), contact.Workphone);
