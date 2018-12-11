@@ -11,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allInformationFromEditForm;
 
         public ContactData(string lastname, string firstname)
         {
@@ -124,21 +125,23 @@ namespace WebAddressbookTests
         {
             get
             {
-                if (AllInformationFromEditForm != null)
+                if (allInformationFromEditForm != null)
                 {
-                    return AllInformationFromEditForm;
+                    return allInformationFromEditForm;
                 }
                 else
                 {
-                    return Firstname + Lastname + Homephone + Mobilephone + Workphone
+                    string a = Firstname + " " + Lastname + "\r\n\r\nH: " + Homephone + "\r\nM: " + Mobilephone + "\r\nW: " + Workphone
 
-    + Email + Email2 + Email3;
+     + "\r\n\r\n" + Email + "\r\n" + Email2 + "\r\n" + Email3;
+
+                    return a;
 
                 }
             }
             set
             {
-                AllInformationFromEditForm = value;
+                allInformationFromEditForm = value;
             }
         }
 

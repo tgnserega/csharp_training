@@ -34,9 +34,9 @@ namespace WebAddressbookTests
             app.Contacts.GreateContactIfNotExist();
 
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
-            ContactData fromPropetiesPage = app.Contacts.GetContactInformationFromPropertiesPage(0);
+            string fromPropetiesPage = app.Contacts.GetContactInformationFromPropertiesPage(0);
 
-            Assert.AreEqual(fromForm.AllInformationFromEditForm, fromPropetiesPage.ContactPropertiesPageText);
+            Assert.AreEqual(fromForm.AllInformationFromEditForm, fromPropetiesPage);
 
         }
     }

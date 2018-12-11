@@ -35,23 +35,17 @@ namespace WebAddressbookTests
             };
         }
 
-        public ContactData GetContactInformationFromPropertiesPage(int v)
+        public string GetContactInformationFromPropertiesPage(int i)
         {
 
             manager.Navigator.GoToContactsPage();
-            OpenContactPropertiesPage(0);
+            OpenContactPropertiesPage(i);
 
             string contactPropertiesPageText = driver.FindElement(By.CssSelector("#content")).Text;
 
-            contactPropertiesPageText = Regex.Replace(contactPropertiesPageText, "[ HMW:\r\n]", "").Trim();
+            // contactPropertiesPageText = Regex.Replace(contactPropertiesPageText, "[ HMW:\r\n]", "").Trim();
 
-            return new ContactData("", "")
-
-            {
-
-                ContactPropertiesPageText = contactPropertiesPageText
-
-            };
+            return contactPropertiesPageText;
         }
 
         public ContactHelper OpenContactPropertiesPage(int i)
@@ -75,9 +69,9 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            string AllInformationFromEditForm = firstName + lastName + homePhone + mobilePhone + workPhone
+           // string AllInformationFromEditForm = firstName + lastName + homePhone + mobilePhone + workPhone
 
-    + email + email2 + email3;
+ //   + email + email2 + email3;
 
             return new ContactData(lastName, firstName)
             {
