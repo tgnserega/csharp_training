@@ -69,10 +69,6 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-           // string AllInformationFromEditForm = firstName + lastName + homePhone + mobilePhone + workPhone
-
- //   + email + email2 + email3;
-
             return new ContactData(lastName, firstName)
             {
 
