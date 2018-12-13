@@ -43,7 +43,7 @@ namespace WebAddressbookTests
 
             string contactPropertiesPageText = driver.FindElement(By.CssSelector("#content")).Text;
 
-            // contactPropertiesPageText = Regex.Replace(contactPropertiesPageText, "[ HMW:\r\n]", "").Trim();
+            contactPropertiesPageText = Regex.Replace(contactPropertiesPageText, "[ \r\n]", "").Trim();
 
             return contactPropertiesPageText;
         }

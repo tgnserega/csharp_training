@@ -93,7 +93,7 @@ namespace WebAddressbookTests
                 return "";
             }
           //         return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
-            return Regex.Replace(phone, "[ -/g()]", "") + "\r\n";
+            return Regex.Replace(phone, "[ -/g()\r\n]", "");
         }
 
         public string Email { get; set; }
@@ -112,7 +112,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Email + "\r\n" + Email2 + "\r\n" + Email3;
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3));
                 }
             }
             set
@@ -131,12 +131,41 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    string a = Firstname + " " + Lastname + "\r\n\r\nH: " + Homephone + "\r\nM: " + Mobilephone + "\r\nW: " + Workphone
+                    string a = "";
 
-     + "\r\n\r\n" + Email + "\r\n" + Email2 + "\r\n" + Email3;
-
+                    if (Firstname != "")
+                    {
+                        a += Firstname;
+                    }
+                    if (Lastname != "")
+                    {
+                        a += Lastname;
+                    }
+                    if (Homephone != "")
+                    {
+                        a += "H:" + Homephone;
+                    }
+                    if (Mobilephone != "")
+                    {
+                        a += "M:" + Mobilephone;
+                    }
+                    if (Workphone != "")
+                    {
+                        a += "H:" + Workphone;
+                    }
+                    if (Email != "")
+                    {
+                        a += Email;
+                    }
+                    if (Email2 != "")
+                    {
+                        a += Email2;
+                    }
+                    if (Email3 != "")
+                    {
+                        a += Email3;
+                    }
                     return a;
-
                 }
             }
             set
