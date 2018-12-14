@@ -32,8 +32,8 @@ namespace WebAddressbookTests
         public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
             List<GroupData> groups = new List<GroupData>();
-            //   string[] lines = File.ReadAllLines(@"groups.csv");
-            string[] lines = File.ReadAllLines(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\groups.csv");
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            //string[] lines = File.ReadAllLines(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\groups.csv");
             foreach (string l in lines)
             {
                 string[] parts =  l.Split(',');
@@ -83,7 +83,7 @@ namespace WebAddressbookTests
             
         }
 
-        [Test, TestCaseSource("GroupDataFromExcelFile")]
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();
