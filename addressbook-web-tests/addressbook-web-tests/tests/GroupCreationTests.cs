@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
@@ -32,8 +33,7 @@ namespace WebAddressbookTests
         public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
             List<GroupData> groups = new List<GroupData>();
-            string[] lines = File.ReadAllLines(@"groups.csv");
-            //string[] lines = File.ReadAllLines(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\groups.csv");
+            string[] lines = File.ReadAllLines(TestContext.CurrentContext.WorkDirectory + @"\groups.json");
             foreach (string l in lines)
             {
                 string[] parts =  l.Split(',');
@@ -48,15 +48,13 @@ namespace WebAddressbookTests
 
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
-            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), @"groups.xml");
+            string fullPath = Path.Combine(TestContext.CurrentContext.WorkDirectory, @"groups.xml");
             return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(fullPath));
-            //return (List<GroupData>) new XmlSerializer(typeof(List<GroupData>))
-            //    .Deserialize(new StreamReader(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\groups.xml"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromJsonFile()
         {
-            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\groups.json"));
+            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(TestContext.CurrentContext.WorkDirectory + @"\groups.json"));
 
         }
 
@@ -64,7 +62,7 @@ namespace WebAddressbookTests
         {
             List<GroupData> groups = new List<GroupData>();
             Excel.Application app = new Excel.Application();
-            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(TestContext.CurrentContext.WorkDirectory + @"\groups.json"));
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range =  sheet.UsedRange;
             for (int i = 1; i <= range.Rows.Count; i++)
@@ -133,6 +131,20 @@ namespace WebAddressbookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreNotEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
         }
     }
 }

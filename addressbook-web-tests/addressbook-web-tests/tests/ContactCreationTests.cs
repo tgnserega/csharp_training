@@ -37,7 +37,7 @@ namespace WebAddressbookTests
         {
             List<ContactData> contacts = new List<ContactData>();
             //   string[] lines = File.ReadAllLines(@"contact.csv");
-            string[] lines = File.ReadAllLines(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\contact.csv");
+            string[] lines = File.ReadAllLines(TestContext.CurrentContext.WorkDirectory + @"\contact.json");
             foreach (string l in lines)
             {
                 string[] parts = l.Split(',');
@@ -56,24 +56,20 @@ namespace WebAddressbookTests
 
         public static IEnumerable<ContactData> ContactDataFromXmlFile()
         {
-            //string fullPath = Path.Combine(Directory.GetCurrentDirectory(), @"contact.xml");
-            //return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader(fullPath));
             return (List<ContactData>) new XmlSerializer(typeof(List<ContactData>))
-                .Deserialize(new StreamReader(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\contact.xml"));
+                .Deserialize(new StreamReader(TestContext.CurrentContext.WorkDirectory + @"\contact.json"));
         }
 
         public static IEnumerable<ContactData> ContactDataFromJsonFile()
         {
-            //return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\contact.json"));
-            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contact.json"));
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(TestContext.CurrentContext.WorkDirectory + @"\contact.json"));
         }
 
         public static IEnumerable<ContactData> ContactDataFromExcelFile()
         {
             List<ContactData> contacts = new List<ContactData>();
             Excel.Application app = new Excel.Application();
-            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"contact.xlsx"));
-            //Excel.Workbook wb = app.Workbooks.Open(@"C:\Users\sergey.pashkov\Source\Repos\tgnserega\csharp_training\addressbook-web-tests\addressbook-web-tests\bin\Debug\contact.xlsx");
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(TestContext.CurrentContext.WorkDirectory, @"contact.xlsx"));
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range = sheet.UsedRange;
             for (int i = 1; i <= range.Rows.Count; i++)
@@ -97,7 +93,7 @@ namespace WebAddressbookTests
 
         }
 
-        [Test, TestCaseSource("ContactDataFromJsonFile")]
+        [Test, TestCaseSource("ContactDataFromExcelFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
