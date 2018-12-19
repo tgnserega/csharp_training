@@ -63,11 +63,14 @@ namespace WebAddressbookTests
         [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
         public static List<GroupData> GetAll()
         {
             using (AddressbookDB db = new AddressbookDB())
             {
-                return (from g in db.Groups select g).ToList();
+                return (from g in db.Groups where g.Deprecated == "0000-00-00 00:00:00" select g).ToList();
             }
         }
     }

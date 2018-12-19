@@ -35,6 +35,71 @@ namespace WebAddressbookTests
             };
         }
 
+        public ContactHelper Modify(ContactData newData)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactModification();
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToContactsPage();
+            InitContactModification(contact.Id);
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(String id)
+        {
+            driver.FindElement(By.XPath($"//a[@href='edit.php?id={id}']")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification()
+        {
+            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
+            return this;
+        }
+
+
+        public ContactHelper Remove()
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectContact();
+            RemoveContact();
+            CloseAlert();
+            manager.Navigator.ReturnToContactsPage();
+            return this;
+        }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            CloseAlert();
+            manager.Navigator.ReturnToContactsPage();
+            return this;
+        }
+
+        public ContactHelper SelectContact()
+        {
+            driver.FindElement(By.Name("selected[]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(String id)
+        {
+            //driver.FindElement(By.XPath("(//*[@id='maintable']/tbody/tr[2]/td[1]/input[@name='selected[]' and @value='" + id + "'])")).Click();
+            //driver.FindElement(By.XPath("(//*[@id='maintable']/tbody/tr[2]/td[1]/input and @value='" + id + "')")).Click();
+            driver.FindElement(By.Id(id)).Click();
+            return this;
+        }
+
         public string GetContactInformationFromPropertiesPage(int i)
         {
 
@@ -90,15 +155,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData newData)
-        {
-            manager.Navigator.GoToContactsPage();
-            InitContactModification();
-            FillContactForm(newData);
-            SubmitContactModification();
-            return this;
-        }
-
         internal double GetContactCount()
         {
             return driver.FindElements(By.CssSelector("tr[name='entry']")).Count;
@@ -126,15 +182,6 @@ namespace WebAddressbookTests
             return new List<ContactData>(contactCache);
         }
 
-        public ContactHelper Remove()
-        {
-            manager.Navigator.GoToContactsPage();
-            SelectContact();
-            RemoveContact();
-            CloseAlert();
-            manager.Navigator.ReturnToContactsPage();
-            return this;
-        }
         public ContactHelper CloseAlert()
         {
             driver.SwitchTo().Alert().Accept();
@@ -147,12 +194,6 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             contactCache = null;
-            return this;
-        }
-
-        public ContactHelper SelectContact()
-        {
-            driver.FindElement(By.Name("selected[]")).Click();
             return this;
         }
 
@@ -180,12 +221,6 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("update")).Click();
             contactCache = null;
-            return this;
-        }
-
-        public ContactHelper InitContactModification()
-        {
-            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
             return this;
         }
 

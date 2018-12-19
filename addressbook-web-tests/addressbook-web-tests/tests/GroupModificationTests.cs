@@ -20,9 +20,9 @@ namespace WebAddressbookTests
             app.Groups.CreateGroupIfNotExist();
 
             List<GroupData> oldGroups = GroupData.GetAll();
-            GroupData oldData = oldGroups[0];
+            GroupData toBeModified = oldGroups[0];
 
-            app.Groups.Modify(newData);
+            app.Groups.Modify(toBeModified, newData);
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
@@ -34,10 +34,10 @@ namespace WebAddressbookTests
 
             foreach (GroupData group in newGroups)
             {
-               if (group.Id == oldData.Id)
+               if (group.Id == toBeModified.Id)
                 {
 
-                    Assert.AreEqual(newData.Name, group.Name);
+                    Assert.AreEqual(newData.Name, toBeModified.Name);
                 }
             }
         }

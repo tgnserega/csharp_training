@@ -189,5 +189,19 @@ namespace WebAddressbookTests
         }
 
         public string ContactPropertiesPageText { get; set; }
+
+        [Column(Name = "id"), PrimaryKey, Identity]
+        public string Id { get; set; }
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return (from g in db.Contacts where g.Deprecated == "0000-00-00 00:00:00" select g).ToList();
+            }
+        }
     }
 }
