@@ -9,6 +9,7 @@ namespace addressbook_tests_autoit
     public class GroupHelper : HelperBase
     {
         public static string GROUPWINTITLE = "Group editor";
+        public static string DELETEGROUPWINTITLE = "Delete group";
 
         public void CreateGroupIfNotExist()
         {
@@ -27,7 +28,6 @@ namespace addressbook_tests_autoit
             }
         }
 
-        public static string DELETEGROUPWINTITLE = "Delete group";
         public GroupHelper(ApplicationManager manager) : base(manager)
         {
 
